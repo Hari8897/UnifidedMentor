@@ -10,7 +10,6 @@ model_path = os.path.join(BASE_DIR, "../models/churn_model.pkl")
 scaler_path = os.path.join(BASE_DIR, "../models/scaler.pkl")
 
 model = joblib.load(model_path)
-scaler = joblib.load(scaler_path)
 
 st.title("Bank Customer Churn Prediction")
 st.write("Predict whether a customer will leave the bank or not based on their features.")
@@ -70,13 +69,10 @@ st.write("Input Data:")
 # Display the input data
 st.dataframe(data)
 
-# scale data 
-data_scaled = scaler.transform(data)
 
-# Predict churn probability
 if st.button("Predict Churn"):
-    prediction = model.predict(data_scaled)
-    probability = model.predict_proba(data_scaled)
+    prediction = model.predict(data)
+    probability = model.predict_proba(data)
     st.subheader("Prediction Result")
     # give in green if the customer is likely to stay and red if the customer is likely to churn
     if prediction[0] == 1:
