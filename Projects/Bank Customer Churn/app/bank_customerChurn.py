@@ -2,11 +2,16 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import joblib
+import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Load the model and scaler
-model = joblib.load('../models/churn_model.pkl')
-scaler = joblib.load('../models/scaler.pkl')
+model_path = os.path.join(BASE_DIR, "../models/churn_model.pkl")
+scaler_path = os.path.join(BASE_DIR, "../models/scaler.pkl")
+
+model = joblib.load(model_path)
+scaler = joblib.load(scaler_path)
+st.write(os.listdir("../models"))
 
 st.title("Bank Customer Churn Prediction")
 st.write("Predict whether a customer will leave the bank or not based on their features.")
@@ -20,7 +25,6 @@ st.write("Predict whether a customer will leave the bank or not based on their f
     These are my column names for the input data, and I will use these names to create a DataFrame for the input data.
 """
 st.sidebar.header("Input Features")
-year = st.sidebar.number_input("Year", min_value=2000, max_value=2025, value=2024)
 credit_score = st.sidebar.number_input("Credit Score", min_value=300, max_value=850, value=600)
 Geography = st.sidebar.selectbox("Geography", ["France", "Spain", "Germany"])
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
