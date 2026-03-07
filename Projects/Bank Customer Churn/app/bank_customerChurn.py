@@ -11,7 +11,6 @@ scaler_path = os.path.join(BASE_DIR, "../models/scaler.pkl")
 
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
-st.write(os.listdir("../models"))
 
 st.title("Bank Customer Churn Prediction")
 st.write("Predict whether a customer will leave the bank or not based on their features.")
