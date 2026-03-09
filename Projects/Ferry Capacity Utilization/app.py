@@ -8,8 +8,13 @@ st.set_page_config(layout="wide")
 st.title("Ferry Operational Efficiency Dashboard")
 
 # Load data
-df = pd.read_csv("Toronto Island Ferry Tickets.csv")
+uploaded_file = st.sidebar.file_uploader("Upload Ferry Dataset", type=["csv"])
 
+if uploaded_file:
+    df = pd.read_csv(uploaded_file)
+else:
+    st.warning("Please upload the dataset")
+    st.stop()
 df['Timestamp'] = pd.to_datetime(df['Timestamp'])
 
 # Sidebar
@@ -58,8 +63,7 @@ if run_analysis:
 
     # Timeline
     st.subheader("Capacity Utilization Timeline")
-    plt.figure(figsize=(8,8))
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(8,5))
     
 
     ax.plot(df['Timestamp'], df['Utilization'])
@@ -82,9 +86,8 @@ if run_analysis:
     if heatmap.empty:
         st.info("Not enough data to display heatmap.")
     else:
-        fig, ax = plt.subplots()
-        plt.figure(figsize=(8,8))
-        sns.heatmap(heatmap, ax=ax)
+        fig, ax = plt.subplots(figsize=(8,6))
+        sns.heatmap(heatmap, cmap="coolwarm", ax=ax)
         st.pyplot(fig)
 
     # Seasonal analysis
